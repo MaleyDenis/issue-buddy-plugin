@@ -1,0 +1,10 @@
+{
+	"id": "obsidian-issues-buddy",
+	"name": "Issues Buddy",
+	"version": "0.1.0",
+	"minAppVersion": "1.1.6",
+	"description": "An Obsidian plugin to help you manage your notes and issues in one place",
+	"author": "Dzianis Malei",
+	"authorUrl": "http://dzianismalei.it",
+	"isDesktopOnly": false
+}
