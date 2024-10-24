@@ -32,18 +32,29 @@ export default class IssuesBuddyPlugin extends Plugin {
   }
 
   async findAllIssues(): Promise<IssueRecord[]> {
-    const filteredFiles = this.app.vault.getMarkdownFiles()
+  // Retrieve all Markdown files except the issues file
+  const filteredFiles = this.app.vault.getMarkdownFiles()
     .filter(file => file.name !== this.ISSUES_FILE_NAME);
 
-    const allIssues: IssueRecord[] = [];
+  const allIssues: IssueRecord[] = [];
 
-    for (const file of filteredFiles) {
+  // Iterate over each filtered file to extract issues
+  for (const file of filteredFiles) {
+    try {
+      // Extract issues from each file and await the result
       const fileIssues = await this.extractIssuesFromFile(file);
+      // Append extracted issues to the result array
       allIssues.push(...fileIssues);
+    } catch (error) {
+      // Handle errors gracefully (optional: log or throw further)
+      console.error(`Error processing file ${file.name}: ${error.message}`);
+      // Continue processing other files even if one fails
     }
-
-    return allIssues;
   }
+
+  // Return all extracted issues
+  return allIssues;
+}
 
   async extractIssuesFromFile(file: TFile) {
     const content = await this.app.vault.read(file);
